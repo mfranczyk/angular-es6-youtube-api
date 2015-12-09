@@ -1,0 +1,77 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <div id="imaginary_container">
+                <div class="input-group stylish-input-group">
+                    <input type="text" class="form-control" ng-model="hCtrl.textToSearch"
+                           ng-model-options="{ debounce: 500 }" ng-change="hCtrl.searchVideos()"
+                           placeholder="Szukaj filmów">
+                    <span class="input-group-addon">
+                        <button type="button" ng-click="hCtrl.searchVideos()">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="hCtrl.error" class="row">
+        <div class="alert-group">
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                {{hCtrl.error}}
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="hCtrl.videoList.length">
+        <hr>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-8 col-xs-offset-2">
+                    <form class="form-inline pull-right" role="form">
+                        <div class="form-group">
+                            <label class="filter-col" style="margin-right:0;" for="pref-perpage">Liczba wyników:</label>
+                            <select ng-model="hCtrl.filters.maxResults" ng-change="hCtrl.searchVideos()"
+                                    ng-options="value as value for value in hCtrl.maxResultsList" id="pref-perpage"
+                                    class="form-control">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="filter-col" style="margin-right:0;" for="pref-orderby">Sortuj:</label>
+                            <select ng-model="hCtrl.filters.order" ng-change="hCtrl.searchVideos()"
+                                    ng-options="item.key as item.name for item in hCtrl.sortingList" id="pref-orderby"
+                                    class="form-control">
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">&nbsp;</div>
+        </div>
+        <div ng-repeat="video in hCtrl.videoList track by $index" class="row carousel-row">
+            <div class="col-xs-8 col-xs-offset-2 slide-row">
+                <div id="carousel-1" class="carousel slide slide-carousel">
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <img ng-src="{{video.thumbnail}}" alt="{{video.title}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-content">
+                    <h4>{{video.title}}</h4>
+
+                    <p>{{video.description}}</p>
+                </div>
+                <div class="slide-footer">
+                <span class="pull-right buttons">
+                    <button ui-sref="videoDetails({video:video})" class="btn btn-sm btn-default"><i
+                            class="fa fa-fw fa-eye"></i> Pokaż szczegóły
+                    </button>
+                </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="hCtrl.videoList && !hCtrl.videoList.length">Brak wyników wyszukiwania</div>
+</div>

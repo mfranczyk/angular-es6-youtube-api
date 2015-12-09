@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <div style="height:400px;">
+                <iframe style="overflow:hidden;height:100%;width:100%" width="100%" height="100%"
+                        ng-src="{{::vdCtrl.embedUrl | trusted}}"
+                        frameborder="0" allowfullscreen></iframe>
+
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <h2>{{::vdCtrl.video.title}}</h2>
+
+            <p><strong>Kanał: {{::vdCtrl.video.channelTitle}}</strong></p>
+
+            <p>{{::vdCtrl.video.description}}</p>
+
+            <div ng-if="::vdCtrl.commentsList.length" class="img-modal">
+                <hr/>
+                <h4>Ostatnie komentarze</h4>
+                <ul class="img-comment-list">
+                    <li ng-repeat="comment in ::vdCtrl.commentsList track by $index">
+                        <div class="comment-img">
+                            <img ng-src="{{::comment.authorImage}}">
+                        </div>
+                        <div class="comment-text">
+                            <strong><a href="">{{::comment.authorName}}</a></strong>
+
+                            <p>{{::comment.text}}</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
